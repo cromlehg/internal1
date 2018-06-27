@@ -1,4 +1,4 @@
-name := """play-scala-starter-example"""
+name := """natyur-play-scala-example"""
 
 version := "1.0-SNAPSHOT"
 
