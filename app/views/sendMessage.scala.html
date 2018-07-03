@@ -1,7 +1,7 @@
 
 <div class="container">
 	<h1>Send message service</h1>
-	<form method="GET" action="@controllers.routes.Application.sendMsg("""test message""")">
+	<form method="POST" action="@controllers.routes.Application.sendMsg("""test message""")">
 		<div class="form-group">
  			<label for="msg">Your message:</label>
  			<textarea id="msg" class="form-control" rows="5"></textarea>
