@@ -12,3 +12,7 @@ GET     /message                    controllers.AsyncController.message
 GET     /assets/*file               controllers.Assets.versioned(file)
 
 POST	/sendMsg                    controllers.Application.sendMsg(txt: String)
+
+GET		/viewMsgs                   controllers.Application.viewMsgs
+
+POST	/doSmth                     controllers.Application.doSmth
