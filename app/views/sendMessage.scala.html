@@ -1,12 +1,11 @@
-
+@(SendMsgForm:Form[Message])(implicit request: MessagesRequestHeader)
+@implicitVerticalFC = @{ b4.vertical.fieldConstructor() }
 
 <div class="container">
   <h1>Send message service</h1>
-  <form method="POST" action="@controllers.routes.Application.sendMsg("""test message""")">
-    <div class="form-group">
-      <label for="msg">Your message:</label>
- 	  <textarea id="msg" class="form-control" rows="5"></textarea>
-	</div>
-	<button type="submit" class="btn btn-info">Send message</button>
-  </form>
+  @b4.form(action = routes.Application.sendMessage()) {
+    @b4.text(SendMsgForm("Name"), '_label -> "Your name, alien:", 'placeholder -> "Your name" )
+    @b4.textarea(SendMsgForm("Message"), 'class -> "form-control", 'rows -> "5",'_label -> "Your message:", 'placeholder -> "Your kind message" )
+    @b4.submit('class -> "btn btn-primary btn-block"){ Send message } 
+  }
 </div>

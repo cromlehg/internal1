@@ -1,6 +1,7 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#"><img src="@routes.Assets.versioned("images/logo_alien.png")" alt="logo"></a>
-  <a class="navbar-brand" href="#">Main menu</a>
-  <a class="navbar-brand" href="#">Send message</a>
+  <a class="navbar-brand" href="@routes.Application.viewHello("""So, hi!""")"><img src="@routes.Assets.versioned("images/logo_alien.png")" alt="logo"></a>
+  <a class="navbar-brand" href="@routes.Application.viewMsgs()">Show messages</a>
+  <a class="navbar-brand" href="@routes.Application.viewSendService()">Send message</a>
 </nav>
  

@@ -1,7 +1,6 @@
+@(content: String)
 
 <div class="container">
-  <h1>Messages</h1>
-  <form method="GET" action="@controllers.routes.Application.viewMsgs()">
-	<button type="submit" class="btn btn-info">View messages</button>
-  </form>
-</div>
+  <h1>All messages</h1>
+  <textarea readonly class="form-control" rows="10">@content</textarea>
+<div class="container">

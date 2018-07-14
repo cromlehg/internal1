@@ -1,4 +1,5 @@
-@(title: String)(content: String)
+@(SendMsgForm:Form[Message])(title: String)(implicit request: MessagesRequestHeader)
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,10 +9,7 @@
     </head>
     <body>
         @menu()
-        <div class="container">
-          <h1>Hello world application.</h1>
-          <div>@content</div>
-          <div class="container">
+        @sendMessage(SendMsgForm)
         @scripts()   
     </body>
 </html>
