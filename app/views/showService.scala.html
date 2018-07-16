@@ -1,4 +1,4 @@
-@(title: String)(content: String)
+@(title: String)(messages: Seq[Message])
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,8 +10,20 @@
         @menu()
         <div class="container">
           <h1>All messages</h1>
-          <textarea readonly class="form-control" rows="10">@content</textarea>
-        <div class="container">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">From</th>
+                <th scope="col">Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(msg <- messages){ 
+              <tr><td>@msg.name</td><td>@msg.txt</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
         @scripts()   
     </body>
 </html>

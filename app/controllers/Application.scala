@@ -14,15 +14,18 @@ import play.api.data.validation.Constraints._
 class Application  @Inject()(messagesAction: MessagesActionBuilder, components: ControllerComponents)
   extends AbstractController(components) {
 
+  var fileCounter = 0
+  var seqMsg:Seq[Message] = Seq()
+
   val SendMsgForm = Form(mapping("Name" -> nonEmptyText,
     "Message" -> text)(Message.apply)(Message.unapply))
  
   def index = Action {
-    Ok(views.html.index("Ok"))
+    Redirect(routes.Application.viewShowService)
   }
 
   def viewHello(content: String) = Action {
-    Ok(views.html.hello("Just hello")(content))
+    Ok(views.html.hello("Info")(content))
   }
 
   def viewBad = Action {
@@ -30,43 +33,52 @@ class Application  @Inject()(messagesAction: MessagesActionBuilder, components: 
   }
  
   def viewSendService = messagesAction { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.sendService(SendMsgForm)("Send please"))
+    Ok(views.html.sendService(SendMsgForm)("Send message"))
   }
 
-  def viewShowService(allmessages: String) = Action {
-    Ok(views.html.showService("Messages")(allmessages))
+  def viewShowService = Action {
+    getAllMessages
+    Ok(views.html.showService("Messages")(seqMsg))
   }
 
-  var fileCounter = 0
-  var message = ""
+  def viewMessages = Action {
+    Redirect(routes.Application.viewShowService)
+  }
+
+  private def getAllMessages = {
+    var i = 0
+    seqMsg = Seq()
+    for (i <- 0 to fileCounter - 1) {
+      val filePath = "txt/textFile" + i.toString + ".txt"
+      var name = ""
+      var txt = ""
+      var k = 0
+      for (line <- Source.fromFile(filePath).getLines) {
+        k += 1
+        if (k == 1) name += line
+        else txt += line + "\r\n"
+      }
+      val msg = new Message(name,txt)
+      seqMsg = seqMsg :+ msg
+    }
+  }
 
   def sendMessage = Action { implicit request =>
     SendMsgForm.bindFromRequest().fold(
       formWithErrors => BadRequest(views.html.bad("Bad")),
       msgForm => {
-
+      var message = "" 
+      var info = "" 
       val filePath = "txt/textFile" + fileCounter.toString + ".txt"
       fileCounter += 1
-      message = "\r\nMessage number " + fileCounter.toString + " from " + msgForm.name + ": \r\n" + msgForm.txt
+      info = "Message from " + msgForm.name + ": '" + msgForm.txt + "' has been sent."
+      message = msgForm.name + "\r\n" + msgForm.txt
       val writer = new PrintWriter(new File(filePath))
       writer.write(message)
       writer.close()
 
-      Redirect(routes.Application.viewHello(message))
+      Redirect(routes.Application.viewHello(info))
     })
-  }
-
-  def viewMsgs = Action {
-  	var allMessages = "\r\n"
-  	var i = 0
-  	for (i <- 0 to fileCounter - 1) {
-  	  val filePath = "txt/textFile" + i.toString + ".txt"
-  	  
-	  for (line <- Source.fromFile(filePath).getLines) {
-        allMessages += line + "\r\n"
-	  }
-	}
-  Redirect(routes.Application.viewShowService(allMessages))
   }
 
 }

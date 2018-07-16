@@ -8,8 +8,4 @@ import play.api.mvc._
 class HomeController @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder)
   extends AbstractController(cc) {
 
-
-
-
-
 }

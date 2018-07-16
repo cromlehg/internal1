@@ -7,7 +7,7 @@ GET     /assets/*file               controllers.Assets.versioned(file)
 POST	/sendMessage                controllers.Application.sendMessage
 
 GET		/viewSendService            controllers.Application.viewSendService
-GET		/viewShowSwrvice            controllers.Application.viewShowService(allmesages: String)
+GET		/viewShowService            controllers.Application.viewShowService
+GET		/viewMessages               controllers.Application.viewMessages
 GET		/viewHello                  controllers.Application.viewHello(content: String)
 GET		/viewBad                    controllers.Application.viewBad
-GET		/viewMsgs                   controllers.Application.viewMsgs
